@@ -25,4 +25,14 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.card {
+    text-align:center;
+    margin-top:2rem;
+    img{
+        border-radius:50%;
+    }
+    h3{
+        margin-bottom:2rem;
+    }
+}
 </style>

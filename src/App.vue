@@ -24,15 +24,39 @@ export default {
     <header>
         <h1>The Rick and Morty App</h1>
     </header>
+    <div class="container">
+        <div class="row">
+            <div class="col" v-for="(char, index) in charArray" :key="index">
+              <AppCards 
+                :charThumb="char.image"
+                :charName="char.name"
+                :charStatus="char.status"
+                :charSpecies="char.species"
+              />
+            </div>
+          </div>
+    </div>
+    
 </template>
 
 <style scoped lang="scss">
 @use "./style/partials/mixin" as *;
     header {
         /* debug */
-        height: 200px;
-        background-color: aqua;
+        height: 100px;
         text-align: center;
         @include flex(row, center, center);
     }
+    .container{
+        /* debug */
+        height: fit-content;
+       
+        .row{
+            @include flex(row, center, center);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    }
+
+
 </style>
