@@ -1,6 +1,7 @@
 <script>
 import AppCards from './components/AppCards.vue';
 import axios from "axios";
+import { store } from "./store";
 export default {
     components: {
         AppCards,
