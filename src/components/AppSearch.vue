@@ -1,3 +1,25 @@
+
+
+<script>
+export default {
+  data() {
+    return {
+      selectedStatus: "All",
+      statusOptions: ["All", "Dead", "Alive", "unknown"]
+    };
+  },
+  methods: {
+    selectChar() {
+      if (this.selectedStatus === "All") {
+        this.$emit("filter", "All");
+      } else {
+        this.$emit("filter", this.selectedStatus);
+      }
+    }
+  }
+};
+</script>
+
 <template>
     <div class="search">
       <select v-model="selectedStatus" @change="selectChar">
@@ -5,29 +27,9 @@
       </select>
     </div>
   </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        selectedStatus: "All",
-        statusOptions: ["All", "Dead", "Alive", "unknown"]
-      };
-    },
-    methods: {
-      selectChar() {
-        if (this.selectedStatus === "All") {
-          this.$emit("filter", "All");
-        } else {
-          this.$emit("filter", this.selectedStatus);
-        }
-      }
-    }
-  };
-  </script>
-  
-  <style scoped>
-  .search {
-    margin-top: 1rem;
-  }
-  </style>
+
+<style scoped>
+.search {
+  margin-top: 1rem;
+}
+</style>
