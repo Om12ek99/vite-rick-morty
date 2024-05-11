@@ -1,43 +1,58 @@
 <script>
 import AppCards from './components/AppCards.vue';
+import AppSearch from './components/AppSearch.vue';
 import axios from "axios";
 import { store } from "./store";
+
 export default {
-    components: {
-        AppCards,
-    },
-    data() {
-        return {
-            charArray:[],     //array dei personaggi inizialmente vuoto
-        };
-    },
-    created() {
-        axios.get("https://rickandmortyapi.com/api/character")
-        .then((resp)=> {
-            this.charArray = resp.data.results;
-            console.log(this.charArray);
-        })
+  components: {
+    AppCards,
+    AppSearch
+  },
+  data() {
+    return {
+      charArray: [],
+      filteredCharacters: [] // Aggiungo un array per tenere traccia dei personaggi filtrati
+    };
+  },
+  created() {
+    axios.get("https://rickandmortyapi.com/api/character")
+      .then((resp) => {
+        this.charArray = resp.data.results;
+        this.filteredCharacters = resp.data.results; // Inizializzo filteredCharacters con tutti i personaggi
+      });
+  },
+  methods: {
+    filterCharacters(status) {
+      if (status === "All") {
+        this.filteredCharacters = this.charArray; // Se viene selezionato "All", mostro tutti i personaggi
+      } else {
+        this.filteredCharacters = this.charArray.filter(char => char.status === status); // Altrimenti filtro i personaggi in base allo stato
+      }
     }
+  }
 };
 </script>
 
 <template>
+  <div>
     <header>
-        <h1>The Rick and Morty App</h1>
+      <h1>The Rick and Morty App</h1>
+      <AppSearch @filter="filterCharacters" />
     </header>
     <div class="container">
-        <div class="row">
-            <div class="col" v-for="(char, index) in charArray" :key="index">
-              <AppCards 
-                :charThumb="char.image"
-                :charName="char.name"
-                :charStatus="char.status"
-                :charSpecies="char.species"
-              />
-            </div>
-          </div>
+      <div class="row">
+        <div class="col" v-for="(char, index) in filteredCharacters" :key="index">
+          <AppCards 
+            :charThumb="char.image"
+            :charName="char.name"
+            :charStatus="char.status"
+            :charSpecies="char.species"
+          />
+        </div>
+      </div>
     </div>
-    
+  </div>
 </template>
 
 <style scoped lang="scss">
